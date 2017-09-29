@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
@@ -98,7 +99,7 @@ public class Hangman {
                         else {
                             String s = JOptionPane.showInputDialog(null, "Unused letters: " + print(unusedLetters) + EOL + "Guess a letter!", TITLE, JOptionPane.QUESTION_MESSAGE);
                             if (s != null) {
-                                char letter = s.toLowerCase().charAt(0);
+                                char letter = s.toLowerCase(Locale.ENGLISH).charAt(0);
                                 if (s.length() != 1 || letter < 97 || letter > 122) {
                                     TEXT_AREA.append("Not a letter." + EOL);
                                 }
@@ -240,7 +241,7 @@ public class Hangman {
     private static void start() {
         Scanner input = null;
         try {
-            input = new Scanner(new File("HangmanConfiguration.ini"));
+            input = new Scanner(new File("HangmanConfiguration.ini"), "UTF-8");
         }
         catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, ex, TITLE, JOptionPane.ERROR_MESSAGE);
@@ -261,7 +262,7 @@ public class Hangman {
             input.nextLine();
             Scanner db = null;
             try {
-                db = new Scanner(new File(input.nextLine()));
+                db = new Scanner(new File(input.nextLine()), "UTF-8");
             }
             catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, ex, TITLE, JOptionPane.ERROR_MESSAGE);
