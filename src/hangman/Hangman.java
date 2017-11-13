@@ -33,7 +33,7 @@ public class Hangman {
     private static final Random RANDOM = new Random();
     private static final int[] RESULTS = new int[6];
     private static final JLabel SCORE_LABEL = new JLabel("", SwingConstants.CENTER);
-    private static final JTextArea TEXT_AREA = new JTextArea(20, 20);
+    private static final JTextArea TEXT_AREA = new JTextArea(17, 30);
     private static final String TITLE = "Hangman";
     private static final JLabel WORD_LABEL = new JLabel("", SwingConstants.CENTER);
     private static ArrayList<String> allNames;
@@ -126,16 +126,17 @@ public class Hangman {
                         checkLetter(letter);
                     }
                 });
-                JPanel infoPanel = new JPanel(new BorderLayout()), buttonPanel = new JPanel();
+                JPanel textPanel = new JPanel(new BorderLayout()), infoPanel = new JPanel(new BorderLayout()), buttonPanel = new JPanel();
+                textPanel.add(WORD_LABEL, BorderLayout.PAGE_START);
+                textPanel.add(new JScrollPane(TEXT_AREA), BorderLayout.CENTER);
                 infoPanel.add(SCORE_LABEL, BorderLayout.PAGE_START);
                 infoPanel.add(FIGURE_LABEL, BorderLayout.CENTER);
-                infoPanel.add(WORD_LABEL, BorderLayout.PAGE_END);
                 buttonPanel.add(giveUpButton);
                 buttonPanel.add(wordButton);
                 buttonPanel.add(letterButton);
                 buttonPanel.add(randomButton);
                 JFrame frame = new JFrame(TITLE);
-                frame.add(new JScrollPane(TEXT_AREA), BorderLayout.CENTER);
+                frame.add(textPanel, BorderLayout.LINE_START);
                 frame.add(infoPanel, BorderLayout.LINE_END);
                 frame.add(buttonPanel, BorderLayout.PAGE_END);
                 frame.pack();

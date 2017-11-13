@@ -2,9 +2,9 @@
 
 Remake of the classic game with customization options for adding variety.
 
-![main](screenshots/main.bmp)
+![main](screenshots/main.png)
 
-![statistics](screenshots/statistics.bmp)
+![statistics](screenshots/statistics.png)
 
 ## Gameplay & Features
 
