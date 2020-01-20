@@ -1,25 +1,36 @@
-/* global names getSvg */
+/* global names getSvg createTextRow createCheckboxRow createButtonGroupRow write keyDownHandler keyUpHandler */
 const defaultDel = true;
-let del = defaultDel;
+let del;
 
 let sticks;
 let name;
 let nameIndex;
 let hiddenName;
 let oldLetters;
-let locked;
 
-document.getElementById('del').checked = del;
+window.locked = true;
+
+const col = document.getElementById('col');
+col.appendChild(createTextRow('d-flex', 'form-group', [['Guess', 'guess']]));
+col.appendChild(createButtonGroupRow('d-flex', 'btn-group', [['success', 'if(!locked)window.guess()', 'g', 'search', '<u>G</u>uess'], ['primary', 'if(!locked)random()', 'r', 'random', '<u>R</u>andom']]));
+col.appendChild(createButtonGroupRow('d-flex', 'btn-group mt-4', [['danger', 'if(!locked)giveUp()', 'u', 'times', 'Give <u>U</u>p'], ['info', 'restart()', 'e', 'sync', 'R<u>e</u>start']]));
+col.appendChild(createCheckboxRow('d-flex', 'form-group mt-4', [['<u>D</u>elete name after round', 'del', 'd']]));
+resetInputs();
 restart();
 document.addEventListener('keydown', keyDownHandler);
 document.addEventListener('keyup', keyUpHandler);
 
-function guess () {
+function resetInputs () {
+  del = defaultDel;
+  document.getElementById('del').checked = del;
+}
+
+window.guess = function () {
   const input = document.getElementById('guess');
   const guess = input.value.toLowerCase();
   input.value = '';
   check(guess);
-}
+};
 
 window.random = function () {
   let letter;
@@ -30,7 +41,7 @@ window.random = function () {
 };
 
 window.giveUp = function () {
-  exit();
+  end();
 };
 
 function restart () {
@@ -43,7 +54,7 @@ function restart () {
   draw(sticks);
   oldLetters = [];
   document.getElementById('text').innerHTML = '';
-  locked = false;
+  window.locked = false;
 }
 
 function check (letter) {
@@ -62,7 +73,7 @@ function check (letter) {
           write('alert alert-success', `${letter} exists.`);
           document.getElementById('name').innerHTML = hiddenName;
           if (hiddenName === name) {
-            exit('alert alert-success', 'Congratulations, name is completed.');
+            end('alert alert-success', 'Congratulations, name is completed.');
           }
         } else {
           draw(++sticks, 'alert alert-warning', `${letter} does not exist.`);
@@ -76,7 +87,7 @@ function check (letter) {
   } else if (letter.length > 1) {
     if (letter.length === name.length) {
       if (letter === name.toLowerCase()) {
-        exit('alert alert-success', 'Congratulations, your guess is correct.');
+        end('alert alert-success', 'Congratulations, your guess is correct.');
       } else {
         draw(++sticks, 'alert alert-warning', 'Your guess is not correct.');
       }
@@ -86,7 +97,7 @@ function check (letter) {
   }
 }
 
-function exit (className, text) {
+function end (className, text) {
   if (className) {
     write(className, text);
   }
@@ -94,16 +105,8 @@ function exit (className, text) {
   if (del) {
     names.splice(nameIndex, 1);
   }
-  locked = true;
+  window.locked = true;
   write('alert alert-info', 'Restart the game!');
-}
-
-function write (className, text) {
-  const child = document.createElement('div');
-  child.className = className + ' alert-dismissible fade show';
-  child.innerHTML = '<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>' + text;
-  const parent = document.getElementById('text');
-  parent.insertBefore(child, parent.firstChild);
 }
 
 function draw (sticks, className, text) {
@@ -112,20 +115,6 @@ function draw (sticks, className, text) {
   }
   document.getElementById('image').src = getSvg(sticks);
   if (sticks === 8) {
-    exit('alert alert-danger', 'You lost, figure is completed.');
-  }
-}
-
-function keyDownHandler (e) {
-  if (e.keyCode === 13 && !locked) {
-    e.preventDefault();
-    guess();
-  }
-}
-
-function keyUpHandler (e) {
-  if (e.keyCode === 82) {
-    del = defaultDel;
-    document.getElementById('del').checked = del;
+    end('alert alert-danger', 'You lost, figure is completed.');
   }
 }
