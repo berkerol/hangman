@@ -1,4 +1,4 @@
-/* global names getSvg createTextRow createCheckboxRow createButtonGroupRow write keyDownHandler keyUpHandler */
+/* global names getSvg createTextRow createCheckboxRow createButtonGroupRow createAlert keyDownHandler keyUpHandler */
 const defaultDel = true;
 let del;
 
@@ -70,51 +70,51 @@ function check (letter) {
           }
         }
         if (letterExists) {
-          write('alert alert-success', `${letter} exists.`);
+          createAlert('success', `${letter} exists.`);
           document.getElementById('name').innerHTML = hiddenName;
           if (hiddenName === name) {
-            end('alert alert-success', 'Congratulations, name is completed.');
+            end('success', 'Congratulations, name is completed.');
           }
         } else {
-          draw(++sticks, 'alert alert-warning', `${letter} does not exist.`);
+          draw(++sticks, 'warning', `${letter} does not exist.`);
         }
       } else {
-        write('alert alert-danger', 'Already guessed before.');
+        createAlert('danger', 'Already guessed before.');
       }
     } else {
-      write('alert alert-danger', 'Not a letter.');
+      createAlert('danger', 'Not a letter.');
     }
   } else if (letter.length > 1) {
     if (letter.length === name.length) {
       if (letter === name.toLowerCase()) {
-        end('alert alert-success', 'Congratulations, your guess is correct.');
+        end('success', 'Congratulations, your guess is correct.');
       } else {
-        draw(++sticks, 'alert alert-warning', 'Your guess is not correct.');
+        draw(++sticks, 'warning', 'Your guess is not correct.');
       }
     } else {
-      write('alert alert-danger', 'Wrong number of letters.');
+      createAlert('danger', 'Wrong number of letters.');
     }
   }
 }
 
 function end (className, text) {
   if (className) {
-    write(className, text);
+    createAlert(className, text);
   }
   document.getElementById('name').innerHTML = name;
   if (del) {
     names.splice(nameIndex, 1);
   }
   window.locked = true;
-  write('alert alert-info', 'Restart the game!');
+  createAlert('info', 'Restart the game!');
 }
 
 function draw (sticks, className, text) {
   if (className) {
-    write(className, text);
+    createAlert(className, text);
   }
   document.getElementById('image').src = getSvg(sticks);
   if (sticks === 8) {
-    end('alert alert-danger', 'You lost, figure is completed.');
+    end('danger', 'You lost, figure is completed.');
   }
 }
