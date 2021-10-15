@@ -11,10 +11,10 @@ let oldLetters;
 window.locked = true;
 
 const col = document.getElementById('col');
-col.appendChild(createTextRow('d-flex', 'form-group', [['Guess', 'guess']]));
+col.appendChild(createTextRow('d-flex', 'mb-3', [['Guess', 'guess']]));
 col.appendChild(createButtonGroupRow('d-flex', 'btn-group', [['success', 'if(!locked)window.guess()', 'g', 'search', '<u>G</u>uess'], ['primary', 'if(!locked)random()', 'r', 'random', '<u>R</u>andom']]));
 col.appendChild(createButtonGroupRow('d-flex', 'btn-group mt-4', [['danger', 'if(!locked)giveUp()', 'u', 'times', 'Give <u>U</u>p'], ['info', 'restart()', 'e', 'sync', 'R<u>e</u>start']]));
-col.appendChild(createCheckboxRow('d-flex', 'form-group mt-4', [['<u>D</u>elete name after round', 'del', 'd']]));
+col.appendChild(createCheckboxRow('d-flex', 'mb-3 mt-4', [['<u>D</u>elete name after round', 'del', 'd']]));
 resetInputs();
 restart();
 document.addEventListener('keydown', keyDownHandler);
