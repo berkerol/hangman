@@ -1,6 +1,7 @@
 # Hangman
 
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=berkerol_hangman&metric=alert_status)](https://sonarcloud.io/dashboard?id=berkerol_hangman)
+[![CI](https://github.com/berkerol/hangman/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/berkerol/hangman/actions/workflows/lint.yml)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/berkerol/hangman/issues)
 [![semistandard](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg)](https://github.com/Flet/semistandard)
 [![ECMAScript](https://img.shields.io/badge/ECMAScript-latest-brightgreen.svg)](https://www.ecma-international.org/ecma-262)
@@ -19,6 +20,10 @@ Remake of the classic game with GUI.
 * Non-letter characters and correctly guessed letters are viewed as they are.
 * Letters that you have not guessed yet are viewed as \*.
 * Press _R_ to reset settings to defaults.
+
+## Continous Integration
+
+It is setup using GitHub Actions in `.github/workflows/lint.yml`
 
 ## Contribution
 
