@@ -1,4 +1,4 @@
-/* global names getSvg createTextRow createCheckboxRow createButtonGroupRow createAlert keyDownHandler keyUpHandler */
+/* global names getSvg createTextRow createCheckboxRow createButtonGroupRow createDatalist deleteOptionFromDatalist createAlert keyDownHandler keyUpHandler */
 const defaultDel = true;
 let del;
 
@@ -15,6 +15,7 @@ col.appendChild(createTextRow('d-flex', 'mb-3', [['Guess', 'guess']]));
 col.appendChild(createButtonGroupRow('d-flex', 'btn-group', [['success', 'if(!locked)window.guess()', 'g', 'search', '<u>G</u>uess'], ['primary', 'if(!locked)random()', 'r', 'random', '<u>R</u>andom']]));
 col.appendChild(createButtonGroupRow('d-flex', 'btn-group mt-4', [['danger', 'if(!locked)giveUp()', 'u', 'times', 'Give <u>U</u>p'], ['info', 'restart()', 'e', 'sync', 'R<u>e</u>start']]));
 col.appendChild(createCheckboxRow('d-flex', 'mb-3 mt-4', [['<u>D</u>elete name after round', 'del', 'd']]));
+col.appendChild(createDatalist('guess', 'guessDatalist', names));
 resetInputs();
 restart();
 document.addEventListener('keydown', keyDownHandler);
@@ -104,6 +105,7 @@ function end (className, text) {
   document.getElementById('name').innerHTML = name;
   if (del) {
     names.splice(nameIndex, 1);
+    deleteOptionFromDatalist('guessDatalist', name);
   }
   window.locked = true;
   createAlert('info', 'Restart the game!');
